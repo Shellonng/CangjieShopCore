@@ -1,0 +1,243 @@
+package CangjieShopCore.test
+
+//test
+import std.unittest.*
+import std.unittest.testmacro.*
+import std.fs.*
+
+import CangjieShopCore.view_model.*
+import CangjieShopCore.models.*
+
+/* ===== Emitted by MacroCall @Test in product_view_model_test.cj:11:1 ===== */
+/* 11.1 */@Attribute[TEST_GENERATED] class ProductViewModelTest <: TestClass {
+/* 11.2 */    private let TestProduct1 = "农夫山泉"
+/* 11.3 */    
+/* 11.4 */    private let TestProduct2 = "哇哈哈"
+/* 11.5 */    
+/* 11.6 */    private let TestProduct3 = "纯悦"
+/* 11.7 */    
+/* 11.8 */    private let TestProduct4 = "怡宝"
+/* 11.9 */    
+/* 11.10 */    @Attribute[AfterAll_4]
+/* 11.11 */    public func reset() {
+/* 11.12 */        File.delete("./data/product/${TestProduct1}")
+/* 11.13 */        File.delete("./data/product/${TestProduct2}")
+/* 11.14 */        File.delete("./data/product/${TestProduct3}")
+/* 11.15 */        File.delete("./data/product/${TestProduct4}")
+/* 11.16 */    }
+/* 11.17 */    
+/* 11.18 */    @Attribute[TestCase_5]
+/* 11.19 */    public func test_create_product_success() {
+/* 11.20 */        let productViewModel = ProductViewModel()
+/* 11.21 */        let price = 2.1
+/* 11.22 */        let desc = "我们不生产水"
+/* 11.23 */        let stock = 999
+/* 11.24 */        let isSaling = true
+/* 11.25 */        let isCreate = productViewModel.createProduct(TestProduct1, price, desc, stock, isSaling)
+/* 11.26 */        assertEqual("File.exists(\"./data/product/\${TestProduct1}\")", "true", File.exists("./data/product/${TestProduct1}"), true)
+/* 11.27 */        let resurn_stock = productViewModel.getStock(TestProduct1)
+/* 11.28 */        expectEqual("resurn_stock", "stock", resurn_stock, stock)
+/* 11.29 */    }
+/* 11.30 */    
+/* 11.31 */    @Attribute[TestCase_6]
+/* 11.32 */    public func test_deduction_of_stock_by_one() {
+/* 11.33 */        let productViewModel = ProductViewModel()
+/* 11.34 */        let price = 3.0
+/* 11.35 */        let desc = "纯净水"
+/* 11.36 */        let stock = 99
+/* 11.37 */        let isSaling = true
+/* 11.38 */        let isCreate = productViewModel.createProduct(TestProduct2, price, desc, stock, isSaling)
+/* 11.39 */        assertEqual("File.exists(\"./data/product/\${TestProduct2}\")", "true", File.exists("./data/product/${TestProduct2}"), true)
+/* 11.40 */        let resurn_stock = productViewModel.deductionOfStockByOne(TestProduct2)
+/* 11.41 */        expectEqual("resurn_stock", "stock - 1", resurn_stock, stock - 1)
+/* 11.42 */    }
+/* 11.43 */    
+/* 11.44 */    @Attribute[TestCase_7]
+/* 11.45 */    public func test_deduction_of_stock() {
+/* 11.46 */        let productViewModel = ProductViewModel()
+/* 11.47 */        let price = 3.0
+/* 11.48 */        let desc = "纯悦"
+/* 11.49 */        let stock = 99
+/* 11.50 */        let isSaling = true
+/* 11.51 */        let num = 8
+/* 11.52 */        let isCreate = productViewModel.createProduct(TestProduct3, price, desc, stock, isSaling)
+/* 11.53 */        assertEqual("File.exists(\"./data/product/\${TestProduct3}\")", "true", File.exists("./data/product/${TestProduct3}"), true)
+/* 11.54 */        let resurn_stock = productViewModel.deductionOfStock(TestProduct3, num)
+/* 11.55 */        expectEqual("resurn_stock", "stock - num", resurn_stock, stock - num)
+/* 11.56 */    }
+/* 11.57 */    
+/* 11.58 */    @Attribute[TestCase_8]
+/* 11.59 */    public func test_incr_stock() {
+/* 11.60 */        let productViewModel = ProductViewModel()
+/* 11.61 */        let price = 1.8
+/* 11.62 */        let desc = "水"
+/* 11.63 */        let stock = 90
+/* 11.64 */        let isSaling = true
+/* 11.65 */        let num = 8
+/* 11.66 */        let isCreate = productViewModel.createProduct(TestProduct4, price, desc, stock, isSaling)
+/* 11.67 */        assertEqual("File.exists(\"./data/product/\${TestProduct4}\")", "true", File.exists("./data/product/${TestProduct4}"), true)
+/* 11.68 */        let resurn_stock = productViewModel.incrStock(TestProduct4, num)
+/* 11.69 */        expectEqual("resurn_stock", "stock + num", resurn_stock, stock + num)
+/* 11.70 */    }
+/* 11.71 */    
+/* 11.72 */    @Attribute[TestCase_9]
+/* 11.73 */    public func test_update_price() {
+/* 11.74 */        let productViewModel = ProductViewModel()
+/* 11.75 */        let newPrice = 1.8
+/* 11.76 */        assertEqual("File.exists(\"./data/product/\${TestProduct1}\")", "true", File.exists("./data/product/${TestProduct1}"), true)
+/* 11.77 */        let res = productViewModel.updatePrice(TestProduct1, newPrice)
+/* 11.78 */        assertEqual("res", "true", res, true)
+/* 11.79 */    }
+/* 11.80 */    
+/* 11.81 */    @Attribute[TestCase_10]
+/* 11.82 */    public func test_update_isSaling() {
+/* 11.83 */        let productViewModel = ProductViewModel()
+/* 11.84 */        let newPrice = 1.8
+/* 11.85 */        assertEqual("File.exists(\"./data/product/\${TestProduct1}\")", "true", File.exists("./data/product/${TestProduct1}"), true)
+/* 11.86 */        let res = productViewModel.updateIsSaling(TestProduct1, false)
+/* 11.87 */        assertEqual("res", "true", res, true)
+/* 11.88 */    }
+/* 11.89 */    
+/* 11.90 */    @Attribute[TestCase_11]
+/* 11.91 */    public func test_delete_product() {
+/* 11.92 */        let productViewModel = ProductViewModel()
+/* 11.93 */        let name = "康师傅"
+/* 11.94 */        let price = 2.1
+/* 11.95 */        let desc = "water"
+/* 11.96 */        let stock = 10
+/* 11.97 */        let isSaling = true
+/* 11.98 */        assertEqual("! File.exists(\"./data/product/\${name}\")", "true", ! File.exists("./data/product/${name}"), true)
+/* 11.99 */        let isCreate = productViewModel.createProduct(name, price, desc, stock, isSaling)
+/* 11.100 */        assertEqual("File.exists(\"./data/product/\${name}\")", "true", File.exists("./data/product/${name}"), true)
+/* 11.101 */        productViewModel.deleteProduct(name)
+/* 11.102 */        assertEqual("! File.exists(\"./data/product/\${name}\")", "true", ! File.exists("./data/product/${name}"), true)
+/* 11.103 */    }
+/* 11.104 */    
+/* 11.105 */    init() {
+/* 11.106 */    }
+/* 11.107 */    private func classConfiguration(): Configuration {
+/* 11.108 */        let configuration = Configuration()
+/* 11.109 */        
+/* 11.110 */        return configuration
+/* 11.111 */    }
+/* 11.112 */    public override func asTestSuite(): TestSuite {
+/* 11.113 */        
+/* 11.114 */        let suiteConfiguration = classConfiguration()
+/* 11.115 */        let suiteBuilder = TestSuite.builder("ProductViewModelTest").configure(suiteConfiguration)
+/* 11.116 */        let m___ = TimeNow()
+/* 11.117 */        suiteConfiguration.set < Measurement >("measurement", m___)
+/* 11.118 */        
+/* 11.119 */        { => let caseConfig = Configuration()
+/* 11.120 */            
+/* 11.121 */            let test_create_product_successTestFunc = { => test_create_product_success();() }
+/* 11.122 */            suiteBuilder.add(
+/* 11.123 */            UnitTestCase.create(
+/* 11.124 */            "test_create_product_success",
+/* 11.125 */            configuration: caseConfig,
+/* 11.126 */            body: test_create_product_successTestFunc
+/* 11.127 */            )
+/* 11.128 */            )
+/* 11.129 */            
+/* 11.130 */        }()
+/* 11.131 */        
+/* 11.132 */        
+/* 11.133 */        { => let caseConfig = Configuration()
+/* 11.134 */            
+/* 11.135 */            let test_deduction_of_stock_by_oneTestFunc = { => test_deduction_of_stock_by_one();() }
+/* 11.136 */            suiteBuilder.add(
+/* 11.137 */            UnitTestCase.create(
+/* 11.138 */            "test_deduction_of_stock_by_one",
+/* 11.139 */            configuration: caseConfig,
+/* 11.140 */            body: test_deduction_of_stock_by_oneTestFunc
+/* 11.141 */            )
+/* 11.142 */            )
+/* 11.143 */            
+/* 11.144 */        }()
+/* 11.145 */        
+/* 11.146 */        
+/* 11.147 */        { => let caseConfig = Configuration()
+/* 11.148 */            
+/* 11.149 */            let test_deduction_of_stockTestFunc = { => test_deduction_of_stock();() }
+/* 11.150 */            suiteBuilder.add(
+/* 11.151 */            UnitTestCase.create(
+/* 11.152 */            "test_deduction_of_stock",
+/* 11.153 */            configuration: caseConfig,
+/* 11.154 */            body: test_deduction_of_stockTestFunc
+/* 11.155 */            )
+/* 11.156 */            )
+/* 11.157 */            
+/* 11.158 */        }()
+/* 11.159 */        
+/* 11.160 */        
+/* 11.161 */        { => let caseConfig = Configuration()
+/* 11.162 */            
+/* 11.163 */            let test_incr_stockTestFunc = { => test_incr_stock();() }
+/* 11.164 */            suiteBuilder.add(
+/* 11.165 */            UnitTestCase.create(
+/* 11.166 */            "test_incr_stock",
+/* 11.167 */            configuration: caseConfig,
+/* 11.168 */            body: test_incr_stockTestFunc
+/* 11.169 */            )
+/* 11.170 */            )
+/* 11.171 */            
+/* 11.172 */        }()
+/* 11.173 */        
+/* 11.174 */        
+/* 11.175 */        { => let caseConfig = Configuration()
+/* 11.176 */            
+/* 11.177 */            let test_update_priceTestFunc = { => test_update_price();() }
+/* 11.178 */            suiteBuilder.add(
+/* 11.179 */            UnitTestCase.create(
+/* 11.180 */            "test_update_price",
+/* 11.181 */            configuration: caseConfig,
+/* 11.182 */            body: test_update_priceTestFunc
+/* 11.183 */            )
+/* 11.184 */            )
+/* 11.185 */            
+/* 11.186 */        }()
+/* 11.187 */        
+/* 11.188 */        
+/* 11.189 */        { => let caseConfig = Configuration()
+/* 11.190 */            
+/* 11.191 */            let test_update_isSalingTestFunc = { => test_update_isSaling();() }
+/* 11.192 */            suiteBuilder.add(
+/* 11.193 */            UnitTestCase.create(
+/* 11.194 */            "test_update_isSaling",
+/* 11.195 */            configuration: caseConfig,
+/* 11.196 */            body: test_update_isSalingTestFunc
+/* 11.197 */            )
+/* 11.198 */            )
+/* 11.199 */            
+/* 11.200 */        }()
+/* 11.201 */        
+/* 11.202 */        
+/* 11.203 */        { => let caseConfig = Configuration()
+/* 11.204 */            
+/* 11.205 */            let test_delete_productTestFunc = { => test_delete_product();() }
+/* 11.206 */            suiteBuilder.add(
+/* 11.207 */            UnitTestCase.create(
+/* 11.208 */            "test_delete_product",
+/* 11.209 */            configuration: caseConfig,
+/* 11.210 */            body: test_delete_productTestFunc
+/* 11.211 */            )
+/* 11.212 */            )
+/* 11.213 */            
+/* 11.214 */        }()
+/* 11.215 */        
+/* 11.216 */        suiteBuilder.afterAll {
+/* 11.217 */            => reset()
+/* 11.218 */            
+/* 11.219 */        }
+/* 11.220 */        return suiteBuilder.build()
+/* 11.221 */    }
+/* 11.222 */}
+/* 11.223 */
+/* 11.224 */
+/* 11.225 */extend TestPackage {
+/* 11.226 */    @Attribute[TEST_REGISTER]
+/* 11.227 */    func registerProductViewModelTest() {
+/* 11.228 */        registerSuite({ => ProductViewModelTest().asTestSuite() })
+/* 11.229 */    }
+/* 11.230 */}
+/* 11.231 */
+/* ===== End of the Emit ===== */

@@ -1,0 +1,178 @@
+package CangjieShopCore.test
+
+//test
+import std.unittest.*
+import std.unittest.testmacro.*
+import std.fs.*
+
+import CangjieShopCore.view_model.*
+import CangjieShopCore.models.*
+
+/* ===== Emitted by MacroCall @Test in order_view_model_test.cj:11:1 ===== */
+/* 11.1 */@Attribute[TEST_GENERATED] class OrderViewModelTest <: TestClass {
+/* 11.2 */    private let product_view_model = ProductViewModel()
+/* 11.3 */    
+/* 11.4 */    private let user_view_model = UserViewModel()
+/* 11.5 */    
+/* 11.6 */    private let username1 = "user1"
+/* 11.7 */    
+/* 11.8 */    private let username2 = "user2"
+/* 11.9 */    
+/* 11.10 */    private var uuid = ""
+/* 11.11 */    
+/* 11.12 */    private var item1 = OrderItem()
+/* 11.13 */    
+/* 11.14 */    private var item2 = OrderItem()
+/* 11.15 */    
+/* 11.16 */    private var item3 = OrderItem()
+/* 11.17 */    
+/* 11.18 */    private var item4 = OrderItem()
+/* 11.19 */    
+/* 11.20 */    private let product1 = "1农夫山泉1"
+/* 11.21 */    
+/* 11.22 */    private let product2 = "1哇哈哈1"
+/* 11.23 */    
+/* 11.24 */    private let product3 = "1纯悦1"
+/* 11.25 */    
+/* 11.26 */    private let product4 = "1怡宝1"
+/* 11.27 */    
+/* 11.28 */    @Attribute[BeforeAll_12]
+/* 11.29 */    public func createItems() {
+/* 11.30 */        let price = 1.8
+/* 11.31 */        let desc = "矿泉水/纯净水"
+/* 11.32 */        let stock = 999
+/* 11.33 */        let isSaling = true
+/* 11.34 */        product_view_model.createProduct(product1, price, desc, stock, isSaling)
+/* 11.35 */        product_view_model.createProduct(product2, price, desc, stock, isSaling)
+/* 11.36 */        product_view_model.createProduct(product3, price, desc, stock, isSaling)
+/* 11.37 */        product_view_model.createProduct(product4, price, desc, stock, isSaling)
+/* 11.38 */        user_view_model.createUser(username1, "123456", "辽宁省沈阳市")
+/* 11.39 */        user_view_model.createUser(username2, "0987654", "辽宁省大连市")
+/* 11.40 */        item1 = OrderItemViewModel.create(product1, 1)
+/* 11.41 */        item2 = OrderItemViewModel.create(product2, 2)
+/* 11.42 */        item3 = OrderItemViewModel.create(product3, 3)
+/* 11.43 */        item4 = OrderItemViewModel.create(product4, 4)
+/* 11.44 */        uuid = user_view_model.getUserIdentify(username2)
+/* 11.45 */    }
+/* 11.46 */    
+/* 11.47 */    @Attribute[AfterAll_13]
+/* 11.48 */    public func reset() {
+/* 11.49 */        File.delete("./data/product/${product1}")
+/* 11.50 */        File.delete("./data/product/${product2}")
+/* 11.51 */        File.delete("./data/product/${product3}")
+/* 11.52 */        File.delete("./data/product/${product4}")
+/* 11.53 */        File.delete("./data/user/${username1}")
+/* 11.54 */        File.delete("./data/user/${username2}")
+/* 11.55 */        File.delete("./data/order/${username1}")
+/* 11.56 */        File.delete("./data/order/${uuid}")
+/* 11.57 */    }
+/* 11.58 */    
+/* 11.59 */    @Attribute[TestCase_14]
+/* 11.60 */    public func test_create_order() {
+/* 11.61 */        let order_view_model = OrderViewModel()
+/* 11.62 */        order_view_model.createOrder(username1)
+/* 11.63 */        assertEqual("File.exists(\"./data/order/\${username1}\")", "true", File.exists("./data/order/${username1}"), true)
+/* 11.64 */        File.delete("./data/order/${username1}")
+/* 11.65 */        assertEqual("! File.exists(\"./data/order/\${username1}\")", "true", ! File.exists("./data/order/${username1}"), true)
+/* 11.66 */    }
+/* 11.67 */    
+/* 11.68 */    @Attribute[TestCase_15]
+/* 11.69 */    public func test_add_order() {
+/* 11.70 */        let order_view_model = OrderViewModel()
+/* 11.71 */        order_view_model.createOrder(username1)
+/* 11.72 */        assertEqual("File.exists(\"./data/order/\${username1}\")", "true", File.exists("./data/order/${username1}"), true)
+/* 11.73 */        let total1 = order_view_model.addOrder(username1, item1)
+/* 11.74 */        let total2 = order_view_model.addOrder(username1, item2)
+/* 11.75 */        assertEqual("total2", "item1.subtotal + item2.subtotal", total2, item1.subtotal + item2.subtotal)
+/* 11.76 */    }
+/* 11.77 */    
+/* 11.78 */    @Attribute[TestCase_16]
+/* 11.79 */    public func test_pay_order() {
+/* 11.80 */        let order_view_model = OrderViewModel()
+/* 11.81 */        order_view_model.createOrder(username2)
+/* 11.82 */        assertEqual("File.exists(\"./data/order/\${username2}\")", "true", File.exists("./data/order/${username2}"), true)
+/* 11.83 */        let total1 = order_view_model.addOrder(username2, item3)
+/* 11.84 */        let total2 = order_view_model.addOrder(username2, item4)
+/* 11.85 */        assertEqual("total2", "item4.subtotal + item3.subtotal", total2, item4.subtotal + item3.subtotal)
+/* 11.86 */        order_view_model.payOrder(username2)
+/* 11.87 */        assertEqual("! File.exists(\"./data/order/\${username2}\")", "true", ! File.exists("./data/order/${username2}"), true)
+/* 11.88 */        let userUuid = user_view_model.getUserIdentify(username2)
+/* 11.89 */        assertEqual("File.exists(\"./data/order/\${userUuid}\")", "true", File.exists("./data/order/${userUuid}"), true)
+/* 11.90 */    }
+/* 11.91 */    
+/* 11.92 */    init() {
+/* 11.93 */    }
+/* 11.94 */    private func classConfiguration(): Configuration {
+/* 11.95 */        let configuration = Configuration()
+/* 11.96 */        
+/* 11.97 */        return configuration
+/* 11.98 */    }
+/* 11.99 */    public override func asTestSuite(): TestSuite {
+/* 11.100 */        
+/* 11.101 */        let suiteConfiguration = classConfiguration()
+/* 11.102 */        let suiteBuilder = TestSuite.builder("OrderViewModelTest").configure(suiteConfiguration)
+/* 11.103 */        let m___ = TimeNow()
+/* 11.104 */        suiteConfiguration.set < Measurement >("measurement", m___)
+/* 11.105 */        
+/* 11.106 */        { => let caseConfig = Configuration()
+/* 11.107 */            
+/* 11.108 */            let test_create_orderTestFunc = { => test_create_order();() }
+/* 11.109 */            suiteBuilder.add(
+/* 11.110 */            UnitTestCase.create(
+/* 11.111 */            "test_create_order",
+/* 11.112 */            configuration: caseConfig,
+/* 11.113 */            body: test_create_orderTestFunc
+/* 11.114 */            )
+/* 11.115 */            )
+/* 11.116 */            
+/* 11.117 */        }()
+/* 11.118 */        
+/* 11.119 */        
+/* 11.120 */        { => let caseConfig = Configuration()
+/* 11.121 */            
+/* 11.122 */            let test_add_orderTestFunc = { => test_add_order();() }
+/* 11.123 */            suiteBuilder.add(
+/* 11.124 */            UnitTestCase.create(
+/* 11.125 */            "test_add_order",
+/* 11.126 */            configuration: caseConfig,
+/* 11.127 */            body: test_add_orderTestFunc
+/* 11.128 */            )
+/* 11.129 */            )
+/* 11.130 */            
+/* 11.131 */        }()
+/* 11.132 */        
+/* 11.133 */        
+/* 11.134 */        { => let caseConfig = Configuration()
+/* 11.135 */            
+/* 11.136 */            let test_pay_orderTestFunc = { => test_pay_order();() }
+/* 11.137 */            suiteBuilder.add(
+/* 11.138 */            UnitTestCase.create(
+/* 11.139 */            "test_pay_order",
+/* 11.140 */            configuration: caseConfig,
+/* 11.141 */            body: test_pay_orderTestFunc
+/* 11.142 */            )
+/* 11.143 */            )
+/* 11.144 */            
+/* 11.145 */        }()
+/* 11.146 */        
+/* 11.147 */        suiteBuilder.beforeAll {
+/* 11.148 */            => createItems()
+/* 11.149 */            
+/* 11.150 */        }
+/* 11.151 */        suiteBuilder.afterAll {
+/* 11.152 */            => reset()
+/* 11.153 */            
+/* 11.154 */        }
+/* 11.155 */        return suiteBuilder.build()
+/* 11.156 */    }
+/* 11.157 */}
+/* 11.158 */
+/* 11.159 */
+/* 11.160 */extend TestPackage {
+/* 11.161 */    @Attribute[TEST_REGISTER]
+/* 11.162 */    func registerOrderViewModelTest() {
+/* 11.163 */        registerSuite({ => OrderViewModelTest().asTestSuite() })
+/* 11.164 */    }
+/* 11.165 */}
+/* 11.166 */
+/* ===== End of the Emit ===== */

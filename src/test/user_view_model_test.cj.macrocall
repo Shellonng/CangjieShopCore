@@ -1,0 +1,134 @@
+package CangjieShopCore.test
+
+//test
+import std.unittest.*
+import std.unittest.testmacro.*
+import std.fs.*
+
+import CangjieShopCore.view_model.*
+import CangjieShopCore.models.*
+
+/* ===== Emitted by MacroCall @Test in user_view_model_test.cj:11:1 ===== */
+/* 11.1 */@Attribute[TEST_GENERATED] class UserViewModelTest <: TestClass {
+/* 11.2 */    private let TestUser1 = "测试用户1"
+/* 11.3 */    
+/* 11.4 */    private let TestUser2 = "测试用户2"
+/* 11.5 */    
+/* 11.6 */    private let TestUser3 = "测试用户3"
+/* 11.7 */    
+/* 11.8 */    @Attribute[AfterAll_0]
+/* 11.9 */    public func reset() {
+/* 11.10 */        File.delete("./data/user/${TestUser1}")
+/* 11.11 */        File.delete("./data/user/${TestUser2}")
+/* 11.12 */        File.delete("./data/user/${TestUser3}")
+/* 11.13 */    }
+/* 11.14 */    
+/* 11.15 */    @Attribute[TestCase_1]
+/* 11.16 */    public func test_create_user_sucess() {
+/* 11.17 */        let userViewModel = UserViewModel()
+/* 11.18 */        let username = TestUser1
+/* 11.19 */        let pwd = "123456"
+/* 11.20 */        let address = "辽宁省沈阳市"
+/* 11.21 */        userViewModel.createUser(username, pwd, address)
+/* 11.22 */        let res = File.exists("./data/user/${username}")
+/* 11.23 */        expectEqual("res", "true", res, true)
+/* 11.24 */    }
+/* 11.25 */    
+/* 11.26 */    @Attribute[TestCase_2]
+/* 11.27 */    public func test_get_user_uuid_sucess() {
+/* 11.28 */        let userViewModel = UserViewModel()
+/* 11.29 */        let username = TestUser2
+/* 11.30 */        let pwd = "123456"
+/* 11.31 */        let address = "辽宁省沈阳市"
+/* 11.32 */        assertEqual("! File.exists(\"./data/user/\${username}\")", "true", ! File.exists("./data/user/${username}"), true)
+/* 11.33 */        userViewModel.createUser(username, pwd, address)
+/* 11.34 */        assertEqual("File.exists(\"./data/user/\${username}\")", "true", File.exists("./data/user/${username}"), true)
+/* 11.35 */        let res = userViewModel.getUserIdentify(username)
+/* 11.36 */        expectEqual("res.size", "19", res.size, 19)
+/* 11.37 */    }
+/* 11.38 */    
+/* 11.39 */    @Attribute[TestCase_3]
+/* 11.40 */    public func test_get_user_address_success() {
+/* 11.41 */        let userViewModel = UserViewModel()
+/* 11.42 */        let username = TestUser3
+/* 11.43 */        let pwd = "123456"
+/* 11.44 */        let address = "辽宁省大连市"
+/* 11.45 */        assertEqual("! File.exists(\"./data/user/\${username}\")", "true", ! File.exists("./data/user/${username}"), true)
+/* 11.46 */        userViewModel.createUser(username, pwd, address)
+/* 11.47 */        assertEqual("File.exists(\"./data/user/\${username}\")", "true", File.exists("./data/user/${username}"), true)
+/* 11.48 */        let res = userViewModel.getUserAddress(username)
+/* 11.49 */        expectEqual("res", "address", res, address)
+/* 11.50 */    }
+/* 11.51 */    
+/* 11.52 */    init() {
+/* 11.53 */    }
+/* 11.54 */    private func classConfiguration(): Configuration {
+/* 11.55 */        let configuration = Configuration()
+/* 11.56 */        
+/* 11.57 */        return configuration
+/* 11.58 */    }
+/* 11.59 */    public override func asTestSuite(): TestSuite {
+/* 11.60 */        
+/* 11.61 */        let suiteConfiguration = classConfiguration()
+/* 11.62 */        let suiteBuilder = TestSuite.builder("UserViewModelTest").configure(suiteConfiguration)
+/* 11.63 */        let m___ = TimeNow()
+/* 11.64 */        suiteConfiguration.set < Measurement >("measurement", m___)
+/* 11.65 */        
+/* 11.66 */        { => let caseConfig = Configuration()
+/* 11.67 */            
+/* 11.68 */            let test_create_user_sucessTestFunc = { => test_create_user_sucess();() }
+/* 11.69 */            suiteBuilder.add(
+/* 11.70 */            UnitTestCase.create(
+/* 11.71 */            "test_create_user_sucess",
+/* 11.72 */            configuration: caseConfig,
+/* 11.73 */            body: test_create_user_sucessTestFunc
+/* 11.74 */            )
+/* 11.75 */            )
+/* 11.76 */            
+/* 11.77 */        }()
+/* 11.78 */        
+/* 11.79 */        
+/* 11.80 */        { => let caseConfig = Configuration()
+/* 11.81 */            
+/* 11.82 */            let test_get_user_uuid_sucessTestFunc = { => test_get_user_uuid_sucess();() }
+/* 11.83 */            suiteBuilder.add(
+/* 11.84 */            UnitTestCase.create(
+/* 11.85 */            "test_get_user_uuid_sucess",
+/* 11.86 */            configuration: caseConfig,
+/* 11.87 */            body: test_get_user_uuid_sucessTestFunc
+/* 11.88 */            )
+/* 11.89 */            )
+/* 11.90 */            
+/* 11.91 */        }()
+/* 11.92 */        
+/* 11.93 */        
+/* 11.94 */        { => let caseConfig = Configuration()
+/* 11.95 */            
+/* 11.96 */            let test_get_user_address_successTestFunc = { => test_get_user_address_success();() }
+/* 11.97 */            suiteBuilder.add(
+/* 11.98 */            UnitTestCase.create(
+/* 11.99 */            "test_get_user_address_success",
+/* 11.100 */            configuration: caseConfig,
+/* 11.101 */            body: test_get_user_address_successTestFunc
+/* 11.102 */            )
+/* 11.103 */            )
+/* 11.104 */            
+/* 11.105 */        }()
+/* 11.106 */        
+/* 11.107 */        suiteBuilder.afterAll {
+/* 11.108 */            => reset()
+/* 11.109 */            
+/* 11.110 */        }
+/* 11.111 */        return suiteBuilder.build()
+/* 11.112 */    }
+/* 11.113 */}
+/* 11.114 */
+/* 11.115 */
+/* 11.116 */extend TestPackage {
+/* 11.117 */    @Attribute[TEST_REGISTER]
+/* 11.118 */    func registerUserViewModelTest() {
+/* 11.119 */        registerSuite({ => UserViewModelTest().asTestSuite() })
+/* 11.120 */    }
+/* 11.121 */}
+/* 11.122 */
+/* ===== End of the Emit ===== */
